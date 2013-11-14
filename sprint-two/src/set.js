@@ -4,13 +4,19 @@ var makeSet = function(){
   return set;
 };
 
-var setPrototype = {};
-
-setPrototype.add = function(){
-};
-
-setPrototype.contains = function(){
-};
-
-setPrototype.remove = function(){
+var setPrototype = {
+	add: function(val){
+    this._storage = this._storage || {};
+    this._storage[val] = true;
+  },
+  contains: function(val){
+    if (this._storage[val]){
+      return true;
+    }
+    return false;
+  },
+  remove: function(val){
+    if(this._storage[val])
+      delete this._storage[val];
+  }
 };
