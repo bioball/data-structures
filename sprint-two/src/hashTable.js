@@ -15,12 +15,24 @@ var HashTable = function(){
 HashTable.prototype.insert = function(k, v){
   var i = getIndexBelowMaxForKey(k, this._limit);
   console.log(i);
-  this._storage.set(i, v);
+  // _storage.set(i, v);
+  if(!Array.isArray(this._storage.get(i))){
+    this._storage.set(i, []);
+  }
+  var values = this._storage.get(i);
+  values.push([k, v]);
+  this._storage.set(i, values);
+  //if key already exists at index, this._limit++;
+  //this._storage.set(this._limit++, v);
 };
 
 HashTable.prototype.retrieve = function(k){
-  var i = getIndexBelowMaxForKey(k, this._limit);
-  return this._storage.get(i);
+  var values = this._storage.get(getIndexBelowMaxForKey(k, this._limit));
+  for(var i = 0; i < values.length; i++){
+    if (values[i][0] === k){
+      return values[i][1];
+    }
+  }
 };
 
 HashTable.prototype.remove = function(){

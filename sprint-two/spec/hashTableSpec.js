@@ -10,6 +10,11 @@ describe("hashTable", function() {
     expect(hashTable.retrieve).toEqual(jasmine.any(Function));
   });
 
+  // it("should be able to insert and retrieve", function(){
+  //   hashTable.insert("answer to meaning of life", 42);
+  //   expect(hashTable.retrieve("answer to meaning of life")).toEqual(42);
+  // });
+
   it("should handle hash function collisions", function(){
     // force the hash function to return 0
     spyOn(window, 'getIndexBelowMaxForKey').andReturn(0);
@@ -20,5 +25,10 @@ describe("hashTable", function() {
     expect(hashTable.retrieve(v2)).toEqual(v2);
   });
 
-  // add more tests!
+  // it("should be able to remove a key value pair", function(){
+  //   hashTable.insert("bob", "likes burgers");
+  //   hashTable.insert("charles" "controls peoples minds");
+  //   expect(hashTable.remove("bob")).toEqual("likes burgers");
+  //   expect(hashTable.retrieve("bob")).toEqual(undefined);
+  // });
 });
