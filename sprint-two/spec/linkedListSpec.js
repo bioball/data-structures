@@ -18,7 +18,7 @@ describe("linkedList", function() {
 
   it("should add a tail to the list", function(){
     linkedList.addToTail(42);
-    expect(linkedList.contains(42).toBeTruthy);
+    expect(linkedList.contains(42)).toBeTruthy();
   });
 
   it("should remove the head", function() {
@@ -28,6 +28,18 @@ describe("linkedList", function() {
 
   it("removeHead should return undefined if list is empty", function(){
     expect(linkedList.removeHead()).toEqual(undefined);
+  });
+
+  it("should add to head", function() {
+    linkedList.addToHead(42);
+    expect(linkedList.contains(42)).toBeTruthy();
+    expect(linkedList.tail.value).toEqual(42);
+  });
+
+  it("should remove from tail", function() {
+    linkedList.addToTail(42);
+    linkedList.removeTail();
+    expect(linkedList.contains(42)).toBe(false);
   });
 
 

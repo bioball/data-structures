@@ -13,6 +13,16 @@ var makeLinkedList = function(){
     }
   };
 
+  list.addToHead = function(val){
+    if(!list.head){
+      list.head = list.tail = makeNode(val);
+    } else {
+      var prevHead = list.head;
+      list.head = makeNode(val);
+      list.head.next = prevHead;
+    }
+  };
+
   list.removeHead = function(){
     if (list.head) {
       var removed = list.head.value;
@@ -31,7 +41,7 @@ var makeLinkedList = function(){
         checkForVal(node.next);
       }
       return false;
-    }
+    };
     return checkForVal(listHead);
   };
 
