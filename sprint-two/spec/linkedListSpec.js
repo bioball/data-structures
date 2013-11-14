@@ -16,5 +16,19 @@ describe("linkedList", function() {
     expect(linkedList.contains).toEqual(jasmine.any(Function));
   });
 
-  // add more tests here to test the functionality of linkedList
+  it("should add a tail to the list", function(){
+    linkedList.addToTail(42);
+    expect(linkedList.contains(42).toBeTruthy);
+  });
+
+  it("should remove the head", function() {
+    linkedList.addToTail(42);
+    expect(linkedList.removeHead()).toEqual(42);
+  });
+
+  it("removeHead should return undefined if list is empty", function(){
+    expect(linkedList.removeHead()).toEqual(undefined);
+  });
+
+
 });

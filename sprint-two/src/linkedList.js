@@ -5,23 +5,34 @@ var makeLinkedList = function(){
   list.tail = null;
 
   list.addToTail = function(val){
-    list.tail.next = makeNode(val);
+    if(!list.tail){
+      list.tail = list.head = makeNode(val);
+    } else {
+      list.tail.next = makeNode(val);
+      list.tail = list.tail.next;
+    }
   };
 
   list.removeHead = function(){
-    var removed = list.head.value;
-    list.head = list.head.next;
-    return removed;
+    if (list.head) {
+      var removed = list.head.value;
+      list.head = list.head.next;
+      return removed;
+    }
   };
 
-  list.contains = function(val, node){
-    if(node.value === val){
-      return true;
+  list.contains = function(val){
+    var listHead = this.head;
+    var checkForVal = function(node){
+      if(node.value === val){
+        return true;
+      }
+      if(node.next){
+        checkForVal(node.next);
+      }
+      return false;
     }
-    if(node.next !== null){
-      list.contains(val, node.next);
-    }
-    return false;
+    return checkForVal(listHead);
   };
 
   return list;
