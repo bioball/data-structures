@@ -19,13 +19,13 @@ describe("tree", function() {
       childValues.push(tree.children[i].value);
     }
     expect(childValues).toEqual([15,25]);
-  })
+  });
 
   it("contains should work", function() {
     tree.addChild(10);
     tree.addChild(26);
     tree.children[0].addChild(30);
-    expect(tree.contains(30)).toBe(true));
+    expect(tree.contains(30)).toBe(true);
   });
 
   // Add more tests here to test the functionality of tree.
