@@ -15,15 +15,17 @@ var treeMethods = {
   },
   contains: function(target){
     var isThere = false;
-    function recurse(nodes) {
-      for (var i=0;i<nodes.children;i++) {
-        if (nodes.children[i] === target)
-          isThere = true;
-        if (nodes.children[i].children)
-          recurse(nodes);
+    function recurse(node) {
+      if(node.value === target){
+        isThere = true;
+      }
+      if (node.children) {
+        for (var i=0;i<node.children.length;i++) {
+          recurse(node.children[i]);
+        }
       }
     }
-    recurse(this.children, target);
+    recurse(this);
     return isThere;
   }
 };
