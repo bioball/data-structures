@@ -6,6 +6,7 @@ var makeTree = function(val){
   newTree.addChild = treeMethods.addChild;
   newTree.contains = treeMethods.contains;
   newTree.removeFromParent = treeMethods.removeFromParent;
+  newTree.traverse = treeMethods.traverse;
 
   return newTree;
 };
@@ -40,5 +41,16 @@ var treeMethods = {
       if (parent.children[i] === this)
         parent.children.splice(i,1);
     }
+  },
+  traverse: function(cb){
+    function recursiveInvoke(node){
+      node.value = cb(node.value);
+      if(node.children){
+        for(var i = 0; i < node.children.length; i++){
+          recursiveInvoke(node.children[i]);
+        }
+      }
+    }
+    recursiveInvoke(this);
   }
 };
