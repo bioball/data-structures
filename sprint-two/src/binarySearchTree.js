@@ -32,6 +32,22 @@ var makeBinarySearchTree = function(){
     }
     return nodeToInsert;
   };
+
+  tree.closestNode = function(target){
+    if (target === node.value){
+      return node;
+    }
+    if (target > node.value){
+      recurseNode(node.right);
+    }
+    if(target < node.value){
+      recurseNode(node.left);
+    }
+    if(!node.left && !node.right){
+      return node;
+    }
+  };
+
   tree.contains = function(target){
     var isThere = false;
     function recurse(node) {
@@ -61,6 +77,21 @@ var makeBinarySearchTree = function(){
     };
     recursiveInvoke(this.head);
   };
+  tree.breadthFirstLog = function(cb) {
+    var queue = makeQueue();
+    var dequeued = this.head;
+    while (dequeued) {
+      cb(dequeued.value);
+      if (dequeued.left) {
+        queue.enqueue(dequeued.left);
+      }
+      if (dequeued.right) {
+        queue.enqueue(dequeued.right);
+      }
+      dequeued = queue.dequeue();
+    }
+
+  };
   tree.makeNode = function(val){
     node.value = val;
     node.left = null;
@@ -69,4 +100,39 @@ var makeBinarySearchTree = function(){
   };
   tree.head = null;
   return tree;
+};
+
+
+//queue class copied from that awesome bioball guy
+
+var makeQueue = function(){
+  var
+    instance = {},
+    size     = 0;
+
+  // Implement the methods below
+
+  instance.enqueue = function(value){
+    size += 1;
+    instance[size] = value;
+  };
+
+  instance.dequeue = function(){
+    var dequeued = instance[1];
+    for(var i = 2; i < size+1; i++){
+      var item = instance[i];
+      instance[i-1] = item;
+    }
+    instance[size] = undefined;
+    if(size > 0){
+      size -= 1;
+    }
+    return dequeued;
+  };
+
+  instance.size = function(){
+    return size;
+  };
+
+  return instance;
 };

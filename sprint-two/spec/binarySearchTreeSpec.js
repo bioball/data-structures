@@ -42,5 +42,18 @@ describe("binarySearchTree", function() {
     });
     expect(values).toEqual([42,30,25,50]);
   });
+
+  it("should log breadth-first", function() {
+    binarySearchTree.insert(42);
+    binarySearchTree.insert(30);
+    binarySearchTree.insert(50);
+    binarySearchTree.insert(25);
+    binarySearchTree.insert(47);
+    var values = [];
+    binarySearchTree.breadthFirstLog(function(val) {
+      values.push(val);
+    });
+    expect(values).toEqual([42, 30, 50, 25, 47]);
+  });
   // add more tests here to test the functionality of binarySearchTree
 });
