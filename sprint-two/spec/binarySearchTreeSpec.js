@@ -22,7 +22,9 @@ describe("binarySearchTree", function() {
 
   it("should be able to add nodes", function(){
     binarySearchTree.insert(15);
-    expect(binarySearchTree.contains(15)).toBe(true);
+    binarySearchTree.insert(20);
+    binarySearchTree.insert(17);
+    expect(binarySearchTree.contains(17)).toBe(true);
   });
   // add more tests here to test the functionality of binarySearchTree
 });

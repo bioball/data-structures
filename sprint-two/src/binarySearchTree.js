@@ -32,7 +32,23 @@ var makeBinarySearchTree = function(){
     }
     return nodeToInsert;
   };
-  tree.contains = function(){};
+  tree.contains = function(target){
+    var isThere = false;
+    function recurse(node) {
+      if (node.value === target) {
+        isThere = true;
+      } else {
+        if (node.right)
+          recurse(node.right);
+        if(node.left)
+          recurse(node.left);
+      }
+
+    }
+    recurse(this.head);
+    return isThere;
+
+  };
   tree.depthFirstLog = function(){};
   tree.makeNode = function(val){
     node.value = val;
