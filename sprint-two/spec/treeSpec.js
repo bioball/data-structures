@@ -25,7 +25,6 @@ describe("tree", function() {
     tree.addChild(10);
     tree.addChild(26);
     tree.children[0].addChild(30);
-    console.log(tree);
     expect(tree.contains(30)).toBe(true);
   });
 

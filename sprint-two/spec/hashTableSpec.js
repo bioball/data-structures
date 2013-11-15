@@ -31,4 +31,18 @@ describe("hashTable", function() {
     expect(hashTable.remove("bob")).toEqual("likes burgers");
     expect(hashTable.retrieve("bob")).toEqual(undefined);
   });
+
+  it("should double in size as soon as 75% of the spaces have been filled", function() {
+    hashTable.insert("hi", 42);
+    hashTable.insert("hello", 42);
+    hashTable.insert("yo", 42);
+    hashTable.insert("foo", 42);
+    hashTable.insert("bar", 42);
+    hashTable.insert("ok", 42);
+    hashTable.insert("next", 42);
+    hashTable.insert("grownups", 42);
+    hashTable.insert("programming", 42);
+    hashTable.insert("YOLO", 42);
+    expect(hashTable._limit).toEqual(16);
+  });
 });
