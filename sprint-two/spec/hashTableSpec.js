@@ -45,4 +45,11 @@ describe("hashTable", function() {
     hashTable.insert("YOLO", 42);
     expect(hashTable._limit).toEqual(16);
   });
+
+  it("should reduce size by half if the amount of spaces being used falls below 25%", function(){
+    hashTable.insert("hi", 42);
+    hashTable.remove("hi");
+    expect(hashTable._limit).toEqual(4);
+    expect(hashTable.countKeys()).toEqual(0);
+  });
 });
