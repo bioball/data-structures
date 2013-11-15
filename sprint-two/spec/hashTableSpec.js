@@ -40,10 +40,12 @@ describe("hashTable", function() {
     hashTable.insert("bar", 42);
     hashTable.insert("ok", 42);
     hashTable.insert("next", 42);
-    hashTable.insert("grownups", 42);
+    hashTable.insert("grownups", 20);
     hashTable.insert("programming", 42);
-    hashTable.insert("YOLO", 42);
+    hashTable.insert("YOLO", 41);
     expect(hashTable._limit).toEqual(16);
+    expect(hashTable.retrieve("YOLO")).toEqual(41);
+    expect(hashTable.retrieve("grownups")).toEqual(20);
   });
 
   it("should reduce size by half if the amount of spaces being used falls below 25%", function(){
