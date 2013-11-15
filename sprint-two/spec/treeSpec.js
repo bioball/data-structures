@@ -42,12 +42,24 @@ describe("tree", function() {
     expect(tree.children[0]).toEqual(undefined);
     expect(child.parent).toEqual(null);
 
-    
+
     var branchValues = [];
     for(var i = 0; i < child.children.length; i++){
       branchValues.push(child.children[i].value);
     }
     expect(branchValues).toEqual([12,"bob"]);
+  });
+
+  it("should be able to traverse and execute a callback on values", function(){
+    var child1 = tree.addChild(10);
+    var child2 = tree.addChild(15);
+    var childOfChild1 = child1.addChild(13);
+    tree.traverse(function(val){
+      return val + 2;
+    });
+    expect(child1.value).toEqual(12);
+    expect(child2.value).toEqual(17);
+    expect(childOfChild1.value).toEqual(15);
   });
 
   // Add more tests here to test the functionality of tree.
