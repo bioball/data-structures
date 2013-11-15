@@ -10,8 +10,10 @@ var makeTree = function(val){
 
 var treeMethods = {
   addChild: function(val){
+    var child = makeTree(val);
     this.children = this.children || [];
-    this.children.push(makeTree(val));
+    this.children.push(child);
+    return child;
   },
   contains: function(target){
     var isThere = false;
