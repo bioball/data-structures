@@ -5,7 +5,7 @@ var makeSet = function(){
 };
 
 var setPrototype = {
-	add: function(val){
+  add: function(val){
     this._storage = this._storage || {};
     this._storage[val] = true;
   },

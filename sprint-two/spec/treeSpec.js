@@ -41,13 +41,13 @@ describe("tree", function() {
     child.removeFromParent();
     expect(tree.children[0]).toEqual(undefined);
     expect(child.parent).toEqual(null);
-    it("the removed child should retain its branches", function(){
-      var branchValues = [];
-      for(var i = 0; i < child.children.length; i++){
-        branchValues.push(child.children[i].value);
-      }
-      expect(branchValues).toEqual([12,"bob"]);
-    });
+
+    
+    var branchValues = [];
+    for(var i = 0; i < child.children.length; i++){
+      branchValues.push(child.children[i].value);
+    }
+    expect(branchValues).toEqual([12,"bob"]);
   });
 
   // Add more tests here to test the functionality of tree.

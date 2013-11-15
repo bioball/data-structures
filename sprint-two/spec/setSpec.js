@@ -12,20 +12,20 @@ describe("set", function() {
   });
 
   it("add should add a value to the set", function(){
-  	set.add(4);
-  	set.add(5);
-  	set.add(6);
-  	var values = [];
-  	for(var key in set._storage){
-  		values.push(key);
-  	}
-  	expect(set.contains(4)).toBe(true);
-  	expect(values).toEqual(['4','5','6']);
+    set.add(4);
+    set.add(5);
+    set.add(6);
+    var values = [];
+    for(var key in set._storage){
+      values.push(key);
+    }
+    expect(set.contains(4)).toBe(true);
+    expect(values).toEqual(['4','5','6']);
   });
 
   it("should remove values from the set", function() {
-  	set.add(4);
-  	set.remove(4);
-  	expect(set.contains(4)).toBe(false);
-  })
+    set.add(4);
+    set.remove(4);
+    expect(set.contains(4)).toBe(false);
+  });
 });

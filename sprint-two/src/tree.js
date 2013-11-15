@@ -1,9 +1,11 @@
 var makeTree = function(val){
   var newTree = {};
   newTree.value = val;
-  newTree.children = undefined;
+  newTree.children = null;
+  newTree.parent = null;
   newTree.addChild = treeMethods.addChild;
   newTree.contains = treeMethods.contains;
+  newTree.removeFromParent = treeMethods.removeFromParent;
 
   return newTree;
 };
@@ -13,6 +15,7 @@ var treeMethods = {
     var child = makeTree(val);
     this.children = this.children || [];
     this.children.push(child);
+    child.parent = this;
     return child;
   },
   contains: function(target){
@@ -29,5 +32,13 @@ var treeMethods = {
     }
     recurse(this);
     return isThere;
+  },
+  removeFromParent: function(){
+    var parent = this.parent;
+    this.parent = null;
+    for(var i = 0; i < parent.children.length; i++){
+      if (parent.children[i] === this)
+        parent.children.splice(i,1);
+    }
   }
 };
