@@ -49,7 +49,18 @@ var makeBinarySearchTree = function(){
     return isThere;
 
   };
-  tree.depthFirstLog = function(){};
+  tree.depthFirstLog = function(callback){
+    var recursiveInvoke = function(node){
+      callback(node.value);
+      if (node.left){
+        recursiveInvoke(node.left);
+      }
+      if (node.right){
+        recursiveInvoke(node.right);
+      }
+    };
+    recursiveInvoke(this.head);
+  };
   tree.makeNode = function(val){
     node.value = val;
     node.left = null;

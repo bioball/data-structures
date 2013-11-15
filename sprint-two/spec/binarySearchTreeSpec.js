@@ -26,5 +26,21 @@ describe("binarySearchTree", function() {
     binarySearchTree.insert(17);
     expect(binarySearchTree.contains(17)).toBe(true);
   });
+
+  it("should have a depthFirstLog function", function(){
+    expect(binarySearchTree.depthFirstLog).toEqual(jasmine.any(Function));
+  });
+
+  it("should invoke the function passed into depthFirstLog on every node", function(){
+    binarySearchTree.insert(42);
+    binarySearchTree.insert(30);
+    binarySearchTree.insert(50);
+    binarySearchTree.insert(25);
+    var values = [];
+    binarySearchTree.depthFirstLog(function(val){
+      values.push(val);
+    });
+    expect(values).toEqual([42,30,25,50]);
+  });
   // add more tests here to test the functionality of binarySearchTree
 });
