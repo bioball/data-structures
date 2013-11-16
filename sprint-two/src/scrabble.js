@@ -12,10 +12,32 @@ var makeScrabble = function() {
 };
 
 var scrabbleMethods = {
-  buildTree: function(strings) {
-    //rebuilds the tree
+  buildTree: function(dictionary) {
+    var self = this;
+    function recurse(node) {
+      for (var i=0;i<self.letters.length;i++) {
+        var words = self.checkWords(self.letters[i]+node.value, dictionary);
+        if (words) {
+          var newChild = makeNode(self.letters[i]+node.value);
+          newChild.words = words;
+          node.children.push(newChild);
+          recurse(newChild);
+        }
+      }
+    }
+    recurse(this.head);
   },
-  checkWords: function(string) {
+  checkWords: function(targetString, dictionary) {
+    var results;
+
+    for (var i=0;i<dictionary.length;i++) {
+      if (dictionary[i].indexOf(targetString) != -1 && results === undefined)
+        results = [];
+      if (dictionary[i] === targetString)
+        results.push(targetString);
+    }
+
+    return results;
     //checks the dictionary against the string, returns false if the substring is not in any words
     //returns an empty array if it is a substr of some words but has no direct matches
     //returns an array of words if there are matches in the dictionary

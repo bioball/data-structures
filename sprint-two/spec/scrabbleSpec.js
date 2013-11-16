@@ -17,4 +17,8 @@ describe("scrabble", function() {
     expect(scrabble.letters).toEqual(jasmine.any(Object));
     expect(scrabble.head).toEqual(jasmine.any(Object));
   });
+
+  it("should construct a tree from a dictionary of words", function() {
+    scrabble.buildTree(['apple', 'bike', 'jog']);
+  });
 });
