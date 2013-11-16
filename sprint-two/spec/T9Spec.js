@@ -14,6 +14,18 @@ describe("T9", function(){
   });
 
   it("Should encode words into T9 number notation.", function() {
-    expect(T9.encode("bike")).toEqual("2453");
+    expect(T9.encode("bike")).toEqual([2,4,5,3]);
+  });
+
+  it("should be able to insert an encoded word", function(){
+    T9.insert(T9.encode('bike'), 'bike');
+  });
+
+  it("should be able to retrieve an array of words for an array of numbers", function() {
+    T9.insert('bike');
+    T9.insert('yolo');
+    T9.insert('needsleep');
+    T9.insert('zolo');
+    expect(T9.type('9656')).toEqual(['yolo', 'zolo']);
   });
 });
