@@ -12,6 +12,34 @@ var makeScrabble = function() {
 };
 
 var scrabbleMethods = {
+  permute: function(array) {  //takes an array of letters and returns the permuatations as an array of arrays
+    // Identity
+    if(!array.length) {
+        return [];
+    }
+
+    var ret = [array],
+        len = array.length,
+        modlen = len - 1,
+        mover = array[modlen],
+        which,
+        subset = this.permute(array.slice(0, -1)),
+        permlen = subset.length;
+
+    for(var iy = 0; iy < permlen; iy++) {
+        which = subset[iy];
+        if(iy % 2) {
+            for(var ix = 0; ix <= modlen; ix ++) {
+                ret.push(which.slice(0, ix).concat([mover], which.slice(ix)));
+            }
+        } else {
+            for(var ix = modlen - 1; ix >= 0; ix --) {
+                ret.push(which.slice(0, ix).concat([mover], which.slice(ix)));
+            }
+        }
+    }
+    return ret;
+  },
   buildTree: function(dictionary) {
     var self = this;
     function recurse(node) {
