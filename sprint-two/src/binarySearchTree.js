@@ -80,6 +80,20 @@ var makeBinarySearchTree = function(){
     };
     recursiveInvoke(this.head);
   };
+
+  tree.inOrderLog = function(callback){
+    var recursiveInvoke = function(node){
+      if (node.left){
+        recursiveInvoke(node.left);
+      }
+      callback(node.value);
+      if (node.right){
+        recursiveInvoke(node.right);
+      }
+    };
+    recursiveInvoke(this.head);
+  };
+
   tree.breadthFirstLog = function(cb) {
     var queue = makeQueue();
     var dequeued = this.head;
@@ -104,15 +118,8 @@ var makeBinarySearchTree = function(){
 
   tree.rebalance = function(){
     values = [];
-    this.depthFirstLog(function(value){
+    this.inOrderLog(function(value){
       values.push(value);
-    });
-    values.sort(function(a, b) {
-      if (a>b)
-        return 1;
-      if (a<b)
-        return -1;
-      return 0;
     });
     var newTree = makeBinarySearchTree();
     var recursiveBalance = function(array){

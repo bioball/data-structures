@@ -1,7 +1,7 @@
 var makeTree = function(val){
   var newTree = {};
   newTree.value = val;
-  newTree.children = null;
+  newTree.children = [];
   newTree.parent = null;
   newTree.addChild = treeMethods.addChild;
   newTree.contains = treeMethods.contains;
@@ -14,7 +14,6 @@ var makeTree = function(val){
 var treeMethods = {
   addChild: function(val){
     var child = makeTree(val);
-    this.children = this.children || [];
     this.children.push(child);
     child.parent = this;
     return child;
@@ -24,6 +23,7 @@ var treeMethods = {
     function recurse(node) {
       if(node.value === target){
         isThere = true;
+        return;
       }
       if (node.children) {
         for (var i=0;i<node.children.length;i++) {
@@ -45,7 +45,7 @@ var treeMethods = {
   traverse: function(cb){
     function recursiveInvoke(node){
       node.value = cb(node.value);
-      if(node.children){
+      if(node.children.length){
         for(var i = 0; i < node.children.length; i++){
           recursiveInvoke(node.children[i]);
         }
