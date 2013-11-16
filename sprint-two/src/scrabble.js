@@ -16,9 +16,9 @@ var scrabbleMethods = {
     var self = this;
     function recurse(node) {
       for (var i=0;i<self.letters.length;i++) {
-        var words = self.checkWords(self.letters[i]+node.value, dictionary);
+        var words = self.checkWords(node.value+self.letters[i], dictionary);
         if (words) {
-          var newChild = makeNode(self.letters[i]+node.value);
+          var newChild = self.makeNode(node.value+self.letters[i]);
           newChild.words = words;
           node.children.push(newChild);
           recurse(newChild);
@@ -31,7 +31,7 @@ var scrabbleMethods = {
     var results;
 
     for (var i=0;i<dictionary.length;i++) {
-      if (dictionary[i].indexOf(targetString) != -1 && results === undefined)
+      if (targetString === dictionary[i].slice(0,targetString.length) && results === undefined)
         results = [];
       if (dictionary[i] === targetString)
         results.push(targetString);
