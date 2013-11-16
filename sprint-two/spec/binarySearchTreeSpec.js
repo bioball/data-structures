@@ -68,7 +68,6 @@ describe("binarySearchTree", function() {
     binarySearchTree.insert(67);
     binarySearchTree.insert(12);
     binarySearchTree.rebalance();
-    console.log(binarySearchTree);
     expect(binarySearchTree.head.left.left.value).toEqual(12);
     expect(binarySearchTree.head.right.left.value).toEqual(54);
   });
