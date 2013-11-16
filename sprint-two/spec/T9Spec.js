@@ -18,7 +18,7 @@ describe("T9", function(){
   });
 
   it("should be able to insert an encoded word", function(){
-    T9.insert(T9.encode('bike'), 'bike');
+    T9.insert('bike');
   });
 
   it("should be able to retrieve an array of words for an array of numbers", function() {

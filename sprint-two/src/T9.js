@@ -10,7 +10,7 @@ var makeT9Tree = function() {
     "m":6, "n":6, "o":6,
     "p":7, "q":7, "r":7, "s":7,
     "t":8, "u":8, "v":8,
-    "w":9, "x":9, "y":9, "z": 9
+    "w":9, "x":9, "y":9, "z":9
   };
 
   return t9;
@@ -18,7 +18,19 @@ var makeT9Tree = function() {
 
 var t9Methods = {
   type: function(input) {
-    return;
+    var arr = input.split('');
+    var output;
+    function recurse(node, remaining) {
+      if (!remaining.length) {
+        return node.words;
+      } else {
+        for (var i=0;i<node.children.length;i++) {
+          if (node.children[i].value === parseInt(remaining[0], 10))
+            return recurse(node.children[i], remaining.slice(1));
+        }
+      }
+    }
+    return recurse(this.head, arr);
   },
   encode: function(word) {
     var result = [];
@@ -29,7 +41,7 @@ var t9Methods = {
   },
   insert: function(actualWord){
     var self = this;
-    var encodedWord = this.encode(actualWord);
+    var encodedWord = self.encode(actualWord);
     var recursiveInsert = function(node, remainingWord){
       var num = remainingWord[0];
       if(remainingWord.length){
@@ -44,7 +56,7 @@ var t9Methods = {
           node.children.push(child);
         } else {
           for(i = 0; i < node.children.length; i++){
-            if(node.children[i].value === child){
+            if(node.children[i].value === num){
               child = node.children[i];
             }
           }
@@ -55,7 +67,7 @@ var t9Methods = {
         node.words.push(actualWord);
       }
     };
-    recursiveInsert(this.head, encodedWord);
+    recursiveInsert(self.head, encodedWord);
   },
   makeNode: function(val){
     var node = {};
