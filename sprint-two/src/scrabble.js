@@ -12,6 +12,22 @@ var makeScrabble = function() {
 };
 
 var scrabbleMethods = {
+  findWords: function(string, dictionary) {
+    var results = [];
+    var temp = string.split('');
+    var permutations = this.permute(temp);
+    var permutationStrings = [];
+    for (var i=0;i<permutations.length;i++) {
+      permutationStrings.push(permutations[i].join(''));
+    }
+    for (var i=0;i<dictionary.length;i++) {
+      for (var j=0;j<permutationStrings.length;j++) {
+        if (dictionary[i] === permutationStrings[j])
+          results.push(dictionary[i]);
+      }
+    }
+    return results;
+  },
   permute: function(array) {  //takes an array of letters and returns the permuatations as an array of arrays
     // Identity
     if(!array.length) {

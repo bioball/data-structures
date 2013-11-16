@@ -18,7 +18,11 @@ describe("scrabble", function() {
     expect(scrabble.head).toEqual(jasmine.any(Object));
   });
 
-  it("should construct a tree from a dictionary of words", function() {
+  it("should construct an optimization tree from a dictionary of words", function() {
     scrabble.buildTree(['apple', 'bike', 'jog']);
+  });
+
+  it("should compare the permuations of a string against a dictionary and return the results", function() {
+    expect(scrabble.findWords('hirac', ['table', 'chair', 'hiya', 'impeccable'])).toEqual(['chair']);
   });
 });
