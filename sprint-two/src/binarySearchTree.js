@@ -1,12 +1,15 @@
 var makeBinarySearchTree = function(){
   var tree = {};
+  tree.depths = {};
   tree.insert = function(val){
 
     var
       head         = this.head,
       nodeToInsert = makeNode(val);
+      count        = 0;
 
     var recursiveInsert = function(subNode){
+      count++;
       if (val === subNode.value){
         return;
       }
@@ -98,7 +101,37 @@ var makeBinarySearchTree = function(){
     node.right = null;
     return node;
   };
-  tree.head = null;
+
+  tree.rebalance = function(){
+    values = [];
+    this.depthFirstLog(function(value){
+      values.push(value);
+    });
+    values.sort(function(a, b) {
+      if (a>b)
+        return 1;
+      if (a<b)
+        return -1;
+      return 0;
+    });
+    var newTree = makeBinarySearchTree();
+    var recursiveBalance = function(array){
+      if(array.length !== 0){
+        var
+          indexOfMedian = Math.floor(array.length/2),
+          median        = array[indexOfMedian],
+          leftArray     = array.slice(0,indexOfMedian),
+          rightArray    = array.slice(indexOfMedian+1);
+
+        newTree.insert(median);
+        recursiveBalance(leftArray);
+        recursiveBalance(rightArray);
+
+      }
+    };
+    recursiveBalance(values);
+    tree.head = newTree.head;
+  };
   return tree;
 };
 

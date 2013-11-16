@@ -55,5 +55,22 @@ describe("binarySearchTree", function() {
     });
     expect(values).toEqual([42, 30, 50, 25, 47]);
   });
+
+  it("should be able to rebalance a binary tree", function(){
+    binarySearchTree.insert(50);
+    binarySearchTree.insert(17);
+    binarySearchTree.insert(76);
+    binarySearchTree.insert(9);
+    binarySearchTree.insert(23);
+    binarySearchTree.insert(54);
+    binarySearchTree.insert(14);
+    binarySearchTree.insert(19);
+    binarySearchTree.insert(67);
+    binarySearchTree.insert(12);
+    binarySearchTree.rebalance();
+    console.log(binarySearchTree);
+    expect(binarySearchTree.head.left.left.value).toEqual(12);
+    expect(binarySearchTree.head.right.left.value).toEqual(54);
+  });
   // add more tests here to test the functionality of binarySearchTree
 });
