@@ -1,73 +1,38 @@
 var makeBinarySearchTree = function(){
   var tree = {};
-  tree.depths = {};
+
   tree.insert = function(val){
-
-    var
-      head         = this.head,
-      nodeToInsert = makeNode(val);
-      count        = 0;
-
-    var recursiveInsert = function(subNode){
-      count++;
-      if (val === subNode.value){
-        return;
-      }
-      if (val < subNode.value){
-        if (subNode.left){
-          recursiveInsert(subNode.left);
-        } else {
-          subNode.left = nodeToInsert;
-        }
-      }
-      if (val > subNode.value){
-        if (subNode.right){
-          recursiveInsert(subNode.right);
-        } else {
-          subNode.right = nodeToInsert;
-        }
-      }
-    };
-    if(!head){
+    var nodeToInsert = tree.makeNode(val);
+    if(!this.head){
       this.head = nodeToInsert;
     } else {
-      recursiveInsert(head);
+      var endNode = this.findClosest(val);
+      if (endNode.value === val) { 
+        return; 
+      }
+      (endNode.value > val) ? endNode.left  = nodeToInsert
+                            : endNode.right = nodeToInsert;
     }
     return nodeToInsert;
   };
 
-  tree.closestNode = function(target){
-    if (target === node.value){
-      return node;
-    }
-    if (target > node.value){
-      recurseNode(node.right);
-    }
-    if(target < node.value){
-      recurseNode(node.left);
-    }
-    if(!node.left && !node.right){
-      return node;
-    }
-  };
-
   tree.contains = function(target){
-    var isThere = false;
-    function recurse(node) {
-      if (node.value === target) {
-        isThere = true;
-      } else {
-        if (node.right)
-          recurse(node.right);
-        if(node.left)
-          recurse(node.left);
-      }
-
-    }
-    recurse(this.head);
-    return isThere;
-
+    return target === this.findClosest(target).value;
   };
+
+  tree.findClosest = function(target, node){
+    node = node || this.head;
+    if(node.value === target || (!node.right && !node.left)){
+      return node;
+    }
+    if(node.value < target){
+      return node.right ? this.findClosest(target, node.right) : node;
+    }
+    if(node.value > target){
+      return node.left ? this.findClosest(target, node.left) : node;
+    }
+  };
+
   tree.depthFirstLog = function(callback){
     var recursiveInvoke = function(node){
       callback(node.value);
@@ -107,21 +72,25 @@ var makeBinarySearchTree = function(){
       }
       dequeued = queue.dequeue();
     }
-
   };
+
   tree.makeNode = function(val){
-    node.value = val;
-    node.left = null;
-    node.right = null;
-    return node;
+    return {
+      value: val,
+      left: null,
+      right: null
+    };
   };
 
   tree.rebalance = function(){
-    values = [];
+    var
+      values  = [],
+      newTree = makeBinarySearchTree();
+
     this.inOrderLog(function(value){
       values.push(value);
     });
-    var newTree = makeBinarySearchTree();
+
     var recursiveBalance = function(array){
       if(array.length !== 0){
         var
@@ -136,43 +105,10 @@ var makeBinarySearchTree = function(){
 
       }
     };
+
     recursiveBalance(values);
     tree.head = newTree.head;
   };
+
   return tree;
-};
-
-
-//queue class copied from that awesome bioball guy
-
-var makeQueue = function(){
-  var
-    instance = {},
-    size     = 0;
-
-  // Implement the methods below
-
-  instance.enqueue = function(value){
-    size += 1;
-    instance[size] = value;
-  };
-
-  instance.dequeue = function(){
-    var dequeued = instance[1];
-    for(var i = 2; i < size+1; i++){
-      var item = instance[i];
-      instance[i-1] = item;
-    }
-    instance[size] = undefined;
-    if(size > 0){
-      size -= 1;
-    }
-    return dequeued;
-  };
-
-  instance.size = function(){
-    return size;
-  };
-
-  return instance;
 };
