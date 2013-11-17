@@ -12,11 +12,11 @@ describe("bTree", function(){
 
   it("should have a left, middle, right, and parent property", function(){
     bTree.insert(10);
-    expect(bTree.root.left   === undefined).toBe(false);
-    expect(bTree.root.middle === undefined).toBe(false);
-    expect(bTree.root.right  === undefined).toBe(false);
-    expect(bTree.root.parent === undefined).toBe(false);
-    expect(bTree.root.values === undefined).toBe(false);
+    expect(bTree.root().left   === undefined).toBe(false);
+    expect(bTree.root().middle === undefined).toBe(false);
+    expect(bTree.root().right  === undefined).toBe(false);
+    expect(bTree.root().parent === undefined).toBe(false);
+    expect(bTree.root().values === undefined).toBe(false);
   });
 
   describe("insert", function(){
@@ -28,15 +28,15 @@ describe("bTree", function(){
       bTree.insert(9);
       bTree.insert(5);
       bTree.insert(17);
-      expect(bTree.root.values).toEqual([9, 17]);
-      expect(bTree.root.left.values).toEqual([5]);
+      expect(bTree.root().values).toEqual([9, 17]);
+      expect(bTree.root().left.values).toEqual([5]);
     });
 
     it("should resplit a node if it has been saturated and a new value needs to be inserted", function(){
       bTree.insert(15);
       bTree.insert(30);
       bTree.insert(20);
-      expect(bTree.root.values).toEqual([20]);
+      expect(bTree.root().values).toEqual([20]);
     });
 
     it("should handle a more complicated case", function(){
@@ -47,11 +47,11 @@ describe("bTree", function(){
       bTree.insert(5);
       bTree.insert(6);
       bTree.insert(7);
-      expect(bTree.root.values).toEqual([4]);
-      expect(bTree.root.middle.values).toEqual([6]);
-      expect(bTree.root.middle.middle.values).toEqual([7]);
-      expect(bTree.root.left.values).toEqual([2]);
-      expect(bTree.root.left.left.values).toEqual([1]);
+      expect(bTree.root().values).toEqual([4]);
+      expect(bTree.root().middle.values).toEqual([6]);
+      expect(bTree.root().middle.middle.values).toEqual([7]);
+      expect(bTree.root().left.values).toEqual([2]);
+      expect(bTree.root().left.left.values).toEqual([1]);
     });
 
     it("should throw an error if the argument is not a number", function(){
@@ -88,6 +88,7 @@ describe("bTree", function(){
       bTree.insert(5);
       bTree.insert(6);
       bTree.insert(7);
+      debugger;
       bTree.remove(4);
       var values = [];
       bTree.traverse(function(node){
@@ -96,9 +97,9 @@ describe("bTree", function(){
         }
       });
       expect(values.indexOf(4) === -1).toBe(true);
-      expect(bTree.root.values).toEqual([2,5]);
-      expect(bTree.root.middle.values).toEqual([3]);
-      expect(bTree.root.right.values).toEqual([6,7]);
+      expect(bTree.root().values).toEqual([2,5]);
+      expect(bTree.root().middle.values).toEqual([3]);
+      expect(bTree.root().right.values).toEqual([6,7]);
     });
 
     it("should throw an error if the argument is not a number", function(){

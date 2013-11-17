@@ -5,12 +5,14 @@
 var makeBTree = function(){
 
   var newBTree = {};
+  var root;
 
-////////////////////////
-//// CLASS FUNCTION ////
-////////////////////////
+/////////////////////////
+//// CLASS FUNCTIONS ////
+/////////////////////////
 
   var findClosest = function(val, node){
+    node = node || root
     if ((!node.left && !node.middle && !node.right) || node.values.indexOf(val) > -1) {
       return node;
     }
@@ -25,27 +27,8 @@ var makeBTree = function(){
     }
   };
 
-////////////////////////////
-//// INSTANCE FUNCTIONS ////
-////////////////////////////
-
-  newBTree.insert = function(val){
-
-    // if there is no root, the root simmply becomes the node. otherwise, find the closest
-    // node and perform an addValue on it
-    if (typeof val !== 'number' ){
-      throw new Error('need a numeric argument')
-    }
-    if (!this.root) {
-      this.root = newBTree.makeNode(val);
-    } else {
-      findClosest(val, this.root).addValue(val);
-    }
-  };
-
-  newBTree.makeNode = function(val){
-    var self = this;
-    return {
+  var makeNode = function(val, node){
+    var node = {
       values  : [val],
       left    : null,
       middle  : null,
@@ -58,7 +41,7 @@ var makeBTree = function(){
           grandParent = node.parent;
 
         // since the function is recursive, a node is made upon first invocation
-        childNode = childNode || newBTree.makeNode(val);
+        childNode = childNode || makeNode(val);
 
         // if the length is less than two, we can guarantee that the first value is filled
         // and the second is empty
@@ -97,9 +80,9 @@ var makeBTree = function(){
                             return a - b;
                           }),
             median      = arr[1],
-            newParent   = newBTree.makeNode(median),
-            leftChild   = newBTree.makeNode(arr[0]),
-            middleChild = childNode || newBTree.makeNode(arr[2]);
+            newParent   = makeNode(median),
+            leftChild   = makeNode(arr[0]),
+            middleChild = childNode || makeNode(arr[2]);
 
           if (node.left) { leftChild.left = node.left; }
           if (node.middle) { leftChild.middle = node.middle; }
@@ -115,18 +98,37 @@ var makeBTree = function(){
           if (grandParent) {
             grandParent.addValue(median, newParent);
           } else {
-            self.root = newParent;
+            root = newParent;
           }
         }
       }
     };
+    return node;
+  };
+
+////////////////////////////
+//// INSTANCE FUNCTIONS ////
+////////////////////////////
+
+  newBTree.insert = function(val){
+
+    // if there is no root, the root simmply becomes the node. otherwise, find the closest
+    // node and perform an addValue on it
+    if (typeof val !== 'number' ){
+      throw new Error('need a numeric argument')
+    }
+    if (!root) {
+      root = makeNode(val);
+    } else {
+      findClosest(val).addValue(val);
+    }
   };
 
   newBTree.traverse = function(callback, node){
 
-    if (!this.root) { return; }
+    if (!root) { return; }
 
-    node = node || this.root;
+    node = node || root;
     callback(node);
 
     if (node.left) {
@@ -152,7 +154,7 @@ var makeBTree = function(){
     indexOfTarget = allValues.indexOf(target);
     if (indexOfTarget < 0) { return; }
 
-    this.root = null;
+    root = null;
     allValues.splice(indexOfTarget, 1);
     for (i = 0; i < allValues.length; i++) {
       this.insert(allValues[i]);
@@ -172,11 +174,13 @@ var makeBTree = function(){
   };
 
   newBTree.contains = function(val){
-    if (!this.root) {
+    if (!root) {
       return false;
     }
-    return findClosest(val, this.root).values.indexOf(val) > -1;
+    return findClosest(val).values.indexOf(val) > -1;
   };
+
+  newBTree.root = function(){ return root; };
 
 
   return newBTree;
