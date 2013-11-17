@@ -88,7 +88,6 @@ describe("bTree", function(){
       bTree.insert(5);
       bTree.insert(6);
       bTree.insert(7);
-      debugger;
       bTree.remove(4);
       var values = [];
       bTree.traverse(function(node){
