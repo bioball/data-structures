@@ -173,7 +173,7 @@ var makeBTree = function(){
     if(!this.root){
       return false;
     }
-    return findClosest(val, this.root).values.indexOf(val) > -1
+    return findClosest(val, this.root).values.indexOf(val) > -1;
   };
 
 
