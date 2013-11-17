@@ -51,7 +51,7 @@ describe("binarySearchTree", function() {
     binarySearchTree.insert(47);
     var values = [];
     binarySearchTree.breadthFirstLog(function(val) {
-      values.push(val);
+      values.push(val.value);
     });
     expect(values).toEqual([42, 30, 50, 25, 47]);
   });
@@ -68,8 +68,17 @@ describe("binarySearchTree", function() {
     binarySearchTree.insert(67);
     binarySearchTree.insert(12);
     binarySearchTree.rebalance();
-    expect(binarySearchTree.head.left.left.value).toEqual(12);
+    expect(binarySearchTree.head.left.left.value).toEqual(14);
     expect(binarySearchTree.head.right.left.value).toEqual(54);
+  });
+
+  it("should automatically rebalance if the max depth is over twice the min depth", function(){
+    binarySearchTree.insert(50);
+    binarySearchTree.insert(60);
+    binarySearchTree.insert(70);
+    binarySearchTree.insert(80);
+    binarySearchTree.insert(90);
+    expect(binarySearchTree.head.value).toEqual(70);
   });
   // add more tests here to test the functionality of binarySearchTree
 });

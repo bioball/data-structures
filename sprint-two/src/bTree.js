@@ -79,15 +79,15 @@ var makeBTree = function(){
                             return a - b;
                           }),
             median      = arr[1],
-            newParent  = newBTree.makeNode(median),
+            newParent   = newBTree.makeNode(median),
             leftChild   = newBTree.makeNode(arr[0]),
             middleChild = newBTree.makeNode(arr[2]);
 
           if (node.left) { leftChild.left = node.left; }
           if (node.middle) { leftChild.middle = node.middle; }
 
-          newParent.left    = leftChild;
-          newParent.middle  = middleChild;
+          newParent.left     = leftChild;
+          newParent.middle   = middleChild;
           leftChild.parent   = newParent;
           middleChild.parent = newParent;
 

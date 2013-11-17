@@ -1,5 +1,9 @@
 var makeBinarySearchTree = function(){
   var tree = {};
+  var count = {
+    max: 0,
+    min: 2
+  };
 
   tree.insert = function(val){
     var nodeToInsert = tree.makeNode(val);
@@ -7,11 +11,16 @@ var makeBinarySearchTree = function(){
       this.head = nodeToInsert;
     } else {
       var endNode = this.findClosest(val);
+      recursiveCounter = 0;
       if (endNode.value === val) { 
         return; 
       }
       (endNode.value > val) ? endNode.left  = nodeToInsert
                             : endNode.right = nodeToInsert;
+    }
+    count.max++;
+    if(count.max >= count.min*2){
+
     }
     return nodeToInsert;
   };
@@ -21,16 +30,41 @@ var makeBinarySearchTree = function(){
   };
 
   tree.findClosest = function(target, node){
-    node = node || this.head;
-    if(node.value === target || (!node.right && !node.left)){
-      return node;
+    var depthCount = 0;
+    var recursiveFinder = function(target, node){
+      depthCount++;
+      if(node.value === target || (!node.right && !node.left)){
+        return node;
+      }
+      if(node.value < target){
+        return node.right ? recursiveFinder(target, node.right) : node;
+      }
+      if(node.value > target){
+        return node.left ? recursiveFinder(target, node.left) : node;
+      }
+    };
+    var closest = recursiveFinder(target, this.head);
+    if(depthCount >= count.min * 2){
+      var counts = this.findDepths();
+      count.max = counts[1];
+      count.min = Math.floor(Math.log(counts[0]));
+      if (depthCount >= count.min){
+        this.rebalance();
+      }
     }
-    if(node.value < target){
-      return node.right ? this.findClosest(target, node.right) : node;
-    }
-    if(node.value > target){
-      return node.left ? this.findClosest(target, node.left) : node;
-    }
+    return closest;
+  };
+
+  tree.findDepths = function(){
+    var numberOfNodes = 0;
+    var mins = [];
+    this.breadthFirstLog(function(node){
+      if (!node.left || !node.right){
+        mins.push(numberOfNodes);
+      }
+      numberOfNodes++;
+    });
+    return [mins[0], numberOfNodes];
   };
 
   tree.depthFirstLog = function(callback){
@@ -63,7 +97,7 @@ var makeBinarySearchTree = function(){
     var queue = makeQueue();
     var dequeued = this.head;
     while (dequeued) {
-      cb(dequeued.value);
+      cb(dequeued);
       if (dequeued.left) {
         queue.enqueue(dequeued.left);
       }
