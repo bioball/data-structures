@@ -78,7 +78,7 @@ describe("bTree", function(){
     expect(values.indexOf(6) > -1).toBe(true);
   });
 
-  describe("removal", function(){
+  describe("remove", function(){
     it("should be able to remove a value", function(){
       bTree.insert(1);
       bTree.insert(2);
