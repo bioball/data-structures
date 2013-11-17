@@ -136,7 +136,7 @@ var makeBTree = function(){
   };
 
   newBTree.remove = function(target){
-    var i, indexOfTarget, allValues = this.allValues();
+    var i, indexOfTarget, allValues
 
     if (typeof target !== 'number' ){
       throw new Error('need a numeric argument')
@@ -144,6 +144,7 @@ var makeBTree = function(){
 
     // if the target isn't in the allValues array, do nothing. otherwise reset the root
     // and reinsert all remaining values back into the tree in order
+    allValues = this.allValues();
     indexOfTarget = allValues.indexOf(target);
     if(indexOfTarget < 0){ return; }
 
