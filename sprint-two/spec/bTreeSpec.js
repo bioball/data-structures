@@ -54,8 +54,9 @@ describe("bTree", function(){
       expect(bTree.root.left.left.values).toEqual([1]);
     });
 
-    it("should throw an error if no argument is passed in", function(){
+    it("should throw an error if the argument is not a number", function(){
       expect(function() { bTree.insert() }).toThrow(new Error("need a numeric argument"));
+      expect(function() { bTree.insert("bob") }).toThrow(new Error("need a numeric argument"));
     })
   });
 
@@ -100,8 +101,9 @@ describe("bTree", function(){
       expect(bTree.root.right.values).toEqual([6,7]);
     });
 
-    it("should throw an error if nothing is passed in for removal", function(){
+    it("should throw an error if the argument is not a number", function(){
       expect(function() { bTree.remove() }).toThrow(new Error("need a numeric argument"));
+      expect(function() { bTree.remove("bob") }).toThrow(new Error("need a numeric argument"));
     });
   });
 
