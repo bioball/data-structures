@@ -1,12 +1,14 @@
-// this constructor will return a b-tree of order 3
+///////////////////////////
+//// B-TREE OF ORDER 3 ////
+///////////////////////////
 
 var makeBTree = function(){
 
   var newBTree = {};
 
-      ////////////////////
-      // CLASS FUNCTION //
-      ////////////////////
+////////////////////////
+//// CLASS FUNCTION ////
+////////////////////////
 
   var findClosest = function(val, node){
     if ((!node.left && !node.middle && !node.right) || node.values.indexOf(val) > -1) {
@@ -23,9 +25,9 @@ var makeBTree = function(){
     }
   };
 
-      ////////////////////////
-      // INSTANCE FUNCTIONS //
-      ////////////////////////
+////////////////////////////
+//// INSTANCE FUNCTIONS ////
+////////////////////////////
 
   newBTree.insert = function(val){
 
@@ -148,7 +150,7 @@ var makeBTree = function(){
     // if the target isn't in the allValues array, do nothing. otherwise reset the root
     // and reinsert all remaining values back into the tree in order
     indexOfTarget = allValues.indexOf(target);
-    if(indexOfTarget < 0){ return; }
+    if (indexOfTarget < 0) { return; }
 
     this.root = null;
     allValues.splice(indexOfTarget, 1);
@@ -170,7 +172,7 @@ var makeBTree = function(){
   };
 
   newBTree.contains = function(val){
-    if(!this.root){
+    if (!this.root) {
       return false;
     }
     return findClosest(val, this.root).values.indexOf(val) > -1;
