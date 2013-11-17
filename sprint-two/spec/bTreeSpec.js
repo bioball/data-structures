@@ -57,7 +57,7 @@ describe("bTree", function(){
     it("should throw an error if nothing is passed in for removal", function(){
       expect(function() { bTree.insert() }).toThrow(new Error("need a numeric argument"));
     })
-  })
+  });
 
   it("should be able to traverse down and accept a callback", function(){
     bTree.insert(1);
@@ -101,10 +101,9 @@ describe("bTree", function(){
     });
 
     it("should throw an error if nothing is passed in for removal", function(){
-      bTree.insert(5)
       expect(function() { bTree.remove() }).toThrow(new Error("need a numeric argument"));
-    })
-  })
+    });
+  });
 
   it("should be able to return an array of all of its values", function(){
     bTree.insert(1);
@@ -114,7 +113,7 @@ describe("bTree", function(){
     bTree.insert(5);
     bTree.insert(6);
     bTree.insert(7);
-    expect(bTree.allValues()).toEqual([1,2,3,4,5,6,7])
-  })
+    expect(bTree.allValues()).toEqual([1,2,3,4,5,6,7]);
+  });
 
 });
