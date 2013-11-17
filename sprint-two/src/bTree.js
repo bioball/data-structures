@@ -1,4 +1,4 @@
-//This constructor will return a b-tree of order 3
+// this constructor will return a b-tree of order 3
 
 var makeBTree = function(){
 
@@ -9,7 +9,7 @@ var makeBTree = function(){
       ////////////////////
 
   var findClosest = function(val, node){
-    if (!node.left && !node.middle && !node.right) {
+    if ((!node.left && !node.middle && !node.right) || node.values.indexOf(val) > -1) {
       return node;
     }
     else if (val < node.values[0]) {
@@ -21,7 +21,6 @@ var makeBTree = function(){
     else {
       return node.middle ? findClosest(val, node.middle) : node;
     }
-
   };
 
       ////////////////////////
@@ -122,21 +121,25 @@ var makeBTree = function(){
   };
 
   newBTree.traverse = function(callback, node){
+
+    if (!this.root) { return; }
+
     node = node || this.root;
     callback(node);
-    if(node.left){
+
+    if (node.left) {
       newBTree.traverse(callback, node.left);
     }
-    if(node.middle){
+    if (node.middle) {
       newBTree.traverse(callback, node.middle);
     }
-    if(node.right){
+    if (node.right) {
       newBTree.traverse(callback, node.right);
     }
   };
 
   newBTree.remove = function(target){
-    var i, indexOfTarget, allValues
+    var i, indexOfTarget, allValues = this.allValues();
 
     if (typeof target !== 'number' ){
       throw new Error('need a numeric argument')
@@ -144,7 +147,6 @@ var makeBTree = function(){
 
     // if the target isn't in the allValues array, do nothing. otherwise reset the root
     // and reinsert all remaining values back into the tree in order
-    allValues = this.allValues();
     indexOfTarget = allValues.indexOf(target);
     if(indexOfTarget < 0){ return; }
 
@@ -157,14 +159,22 @@ var makeBTree = function(){
   };
 
   newBTree.allValues = function(){
-    var collection = [];
+    var i, collection = [];
+
     this.traverse(function(node){
-      for (var i = 0; i < node.values.length; i++) {
+      for (i = 0; i < node.values.length; i++) {
         collection.push(node.values[i]);
       }
-    })
+    });
     return collection.sort(function(a, b){ return a - b; });
-  }
+  };
+
+  newBTree.contains = function(val){
+    if(!this.root){
+      return false;
+    }
+    return findClosest(val, this.root).values.indexOf(val) > -1
+  };
 
 
   return newBTree;
