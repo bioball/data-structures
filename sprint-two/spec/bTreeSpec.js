@@ -116,4 +116,15 @@ describe("bTree", function(){
     expect(bTree.allValues()).toEqual([1,2,3,4,5,6,7]);
   });
 
+  it("should let you know whether a tree contains a value or not", function(){
+    expect(bTree.contains(30)).toBe(false);
+    bTree.insert(50);
+    bTree.insert(42);
+    bTree.insert(70);
+    bTree.insert(1);
+    bTree.insert(90);
+    expect(bTree.contains(70)).toBe(true);
+    expect(bTree.contains(44)).toBe(false);
+  })
+
 });
